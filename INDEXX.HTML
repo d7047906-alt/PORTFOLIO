@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dina | Front-End Developer Portfolio</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Montserrat:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <!-- jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        /* ==========================================
+           1. RESET & BASE STYLES
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #08090a;
+            color: #f1f5f9;
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        html[lang="en"] body {
+            font-family: 'Montserrat', 'Cairo', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08090a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff2a2a;
+        }
+
+        /* ==========================================
+           2. INTRO LOADER ANIMATION
+           ========================================== */
+        #loader-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #08090a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .logo-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Fiery DN Logo */
+        .fire-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 110px;
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: #ff2a2a;
+            text-shadow: 
+                0 0 10px rgba(255, 42, 42, 0.8),
+                0 0 25px rgba(255, 0, 0, 0.6),
+                0 0 45px rgba(255, 68, 0, 0.4);
+            position: relative;
+            user-select: none;
+            animation: showAndScale 0.8s ease forwards;
+        }
+
+        .fire-logo::before {
+            content: '';
+            position: absolute;
+            top: 32%;
+            left: -10%;
+            width: 120%;
+            height: 5px;
+            background: #08090a;
+            transform: rotate(-12deg);
+            box-shadow: 0 0 4px rgba(0,0,0,0.9);
+        }
+
+        .fire-logo::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            left: -10%;
+            width: 120%;
+            height: 4px;
+            background: #08090a;
+            transform: rotate(-8deg);
+            box-shadow: 0 0 4px rgba(0,0,0,0.9);
+        }
+
+        @keyframes showAndScale {
+            0% { opacity: 0; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* ==========================================
+           3. NAVBAR
+           ========================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(8, 9, 10, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .nav-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: #ff2a2a;
+            text-decoration: none;
+            position: relative;
+            letter-spacing: -1px;
+        }
+
+        .nav-logo::before {
+            content: '';
+            position: absolute;
+            top: 40%;
+            left: -5%;
+            width: 110%;
+            height: 2px;
+            background: #08090a;
+            transform: rotate(-12deg);
+        }
+
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #f1f5f9;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ff2a2a;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: #ff2a2a;
+            transition: 0.3s;
+        }
+
+        html[lang="en"] .nav-links a::after {
+            right: auto;
+            left: 0;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .lang-btn {
+            background: rgba(255, 42, 42, 0.15);
+            color: #ff2a2a;
+            border: 1px solid rgba(255, 42, 42, 0.4);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: #ff2a2a;
+            color: #ffffff;
+            border-color: #ff2a2a;
+            transform: scale(1.05);
+        }
+
+        /* ==========================================
+           4. HERO SECTION
+           ========================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 8% 60px;
+            background: radial-gradient(circle at center, rgba(255, 42, 42, 0.08) 0%, rgba(8, 9, 10, 1) 70%);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-subtitle {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff2a2a;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+
+        .hero-title span {
+            color: #ffffff;
+            font-weight: 900;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #ff2a2a;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 42, 42, 0.3);
+            border: 2px solid #ff2a2a;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: #ff2a2a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 42, 42, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #334155;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ff2a2a;
+            color: #ff2a2a;
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================
+           5. SECTION GENERAL STYLES
+           ========================================== */
+        .section {
+            padding: 100px 8%;
+        }
+
+        .section-title-wrap {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #ff2a2a;
+            border-radius: 2px;
+        }
+
+        /* ==========================================
+           6. ABOUT SECTION
+           ========================================== */
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #111315;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #222;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #cbd5e1;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: #1a1d20;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #282c30;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .feature-item:hover {
+            border-color: #ff2a2a;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            color: #ff2a2a;
+            margin-bottom: 12px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* ==========================================
+           7. SKILLS SECTION (GRID)
+           ========================================== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: #111315;
+            padding: 30px 20px;
+            border-radius: 16px;
+            border: 1px solid #222;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .skill-card:hover {
+            border-color: #ff2a2a;
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(255, 42, 42, 0.15);
+        }
+
+        .skill-card i {
+            font-size: 45px;
+            color: #ff2a2a;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover i {
+            transform: scale(1.1);
+        }
+
+        .skill-card span {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* ==========================================
+           8. PROJECTS SECTION
+           ========================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: #111315;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 42, 42, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-img-wrapper {
+            height: 200px;
+            background: #0f172a;
+            border-bottom: 1px solid #222;
+            overflow: hidden;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.08);
+        }
+
+        .project-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .project-desc {
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 20px;
+            min-height: 70px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(255, 42, 42, 0.1);
+            color: #ff2a2a;
+            font-size: 13px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .project-links {
+            margin-top: auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 6px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           9. CONTACT SECTION
+           ========================================== */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #111315;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #222;
+            text-align: center;
+        }
+
+        .contact-desc {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: #1a1d20;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #282c30;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-card:hover {
+            border-color: #ff2a2a;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 42, 42, 0.15);
+        }
+
+        .contact-card i {
+            font-size: 36px;
+        }
+
+        .contact-card.whatsapp i {
+            color: #25D366;
+        }
+
+        .contact-card.email i {
+            color: #ff2a2a;
+        }
+
+        .contact-card span {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .contact-card p {
+            font-size: 14px;
+            color: #94a3b8;
+            word-break: break-all;
+        }
+
+        /* ==========================================
+           10. FOOTER
+           ========================================== */
+        footer {
+            padding: 30px 8%;
+            text-align: center;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 38px; }
+            .nav-links { display: none; }
+            .section { padding: 60px 5%; }
+            .about-container, .contact-container { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- INTRO LOADER -->
+    <div id="loader-screen">
+        <div class="logo-container">
+            <div class="fire-logo">DINA</div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header>
+        <a href="#" class="nav-logo">DINA</a>
+        <div class="nav-right-group">
+            <ul class="nav-links">
+                <li><a href="#hero" class="active" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                <li><a href="#about" data-ar="نبذة عني" data-en="About">نبذة عني</a></li>
+                <li><a href="#skills" data-ar="المهارات" data-en="Skills">المهارات</a></li>
+                <li><a href="#projects" data-ar="المشاريع" data-en="Projects">المشاريع</a></li>
+                <li><a href="#contact" data-ar="تواصل معي" data-en="Contact">تواصل معي</a></li>
+            </ul>
+            <button id="langToggleBtn" class="lang-btn">
+                <i class="fa-solid fa-globe"></i> <span id="langText">English</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <span class="hero-subtitle" data-ar="FRONT-END WEB DEVELOPER" data-en="FRONT-END WEB DEVELOPER">FRONT-END WEB DEVELOPER</span>
+            <h1 class="hero-title" data-ar="أصمم وأطور <span>تجارب ويب</span> احترافية وتفاعلية" data-en="I Design & Develop Interactive <span>Web Experiences</span>">
+                أصمم وأطور <span>تجارب ويب</span> احترافية وتفاعلية
+            </h1>
+            <p class="hero-description" data-ar="متخصصة في تحويل الأفكار والتصاميم إلى مواقع ويب سريعة، متجاوبة وممتعة للمستخدم، باستخدام أحدث تقنيات الويب." data-en="Specialized in transforming ideas & designs into fast, responsive, and engaging websites using modern web technologies.">
+                متخصصة في تحويل الأفكار والتصاميم إلى مواقع ويب سريعة، متجاوبة وممتعة للمستخدم، باستخدام أحدث تقنيات الويب.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-laptop-code"></i> <span data-ar="استعرض مشاريعي" data-en="View My Work">استعرض مشاريعي</span></a>
+                <a href="#contact" class="btn btn-secondary"><i class="fa-regular fa-envelope"></i> <span data-ar="تواصل معي" data-en="Contact Me">تواصل معي</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section">
+        <div class="section-title-wrap">
+            <h2 class="section-title" data-ar="نبذة عني" data-en="About Me">نبذة عني</h2>
+        </div>
+
+        <div class="about-container">
+            <p class="about-text" data-ar="مرحباً بك! أنا ديناعاطف، مطورة واجهات أمامية (Front-End Developer) شغوفة ببناء وتطوير تطبيقات ومواقع الويب الحديثة. أمتلك خبرة واسعة في تطوير الواجهات باستخدام أحدث التقنيات مثل HTML5, CSS3, JavaScript, jQuery, و Bootstrap. أسعى دائماً لكتابة كود برمدجي نظيف (Clean Code) وتوفير أفضل تجربة مستخدم (User Experience) مع الاهتمام بأدق التفاصيل والسرعة والتجاوب مع كافة الأجهزة." data-en="Hello! I'm Dina, a passionate Front-End Web Developer focused on building modern web applications. Skilled in HTML5, CSS3, JavaScript, jQuery, and Bootstrap. I aim for clean code, smooth animations, and top-tier user experiences across all devices.">
+                مرحباً بك! أنا ديناعاطف، مطورة واجهات أمامية (Front-End Developer) شغوفة ببناء وتطوير تطبيقات ومواقع الويب الحديثة. أمتلك خبرة واسعة في تطوير الواجهات باستخدام أحدث التقنيات مثل HTML5, CSS3, JavaScript, jQuery, و Bootstrap. أسعى دائماً لكتابة كود برمدجي نظيف (Clean Code) وتوفير أفضل تجربة مستخدم (User Experience) مع الاهتمام بأدق التفاصيل والسرعة والتجاوب مع كافة الأجهزة.
+            </p>
+
+            <div class="about-features">
+                <div class="feature-item">
+                    <i class="fa-solid fa-mobile-screen-button feature-icon"></i>
+                    <h3 class="feature-title" data-ar="تصميم متجاوب" data-en="Responsive Design">تصميم متجاوب</h3>
+                    <p class="feature-desc" data-ar="تأكيد عمل كافة المواقع بمرونة وسلاسة على جميع أجهزة الشاشات والموبايل." data-en="Ensuring all websites adapt seamlessly to mobile, tablet, and desktop screens.">تأكيد عمل كافة المواقع بمرونة وسلاسة على جميع أجهزة الشاشات والموبايل.</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fa-solid fa-code feature-icon"></i>
+                    <h3 class="feature-title" data-ar="كود نظيف وسريع" data-en="Clean & Fast Code">كود نظيف وسريع</h3>
+                    <p class="feature-desc" data-ar="الاهتمام بهيكلة الكود بأفضل المعايير لضمان السرعة وسهولة التحديث مستقبلاً." data-en="Writing structured and maintainable code following modern best practices.">الاهتمام بهيكلة الكود بأفضل المعايير لضمان السرعة وسهولة التحديث مستقبلاً.</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fa-solid fa-wand-magic-sparkles feature-icon"></i>
+                    <h3 class="feature-title" data-ar="تفاعلية واحترافية" data-en="Interactive UX">تفاعلية واحترافية</h3>
+                    <p class="feature-desc" data-ar="إضافة لمسات تفاعلية حركة وجذابة ترفع من قيمة تجربة المستخدم النهائي." data-en="Adding interactive UI effects to elevate the overall user experience.">إضافة لمسات تفاعلية حركة وجذابة ترفع من قيمة تجربة المستخدم النهائي.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION (GRID) -->
+    <section id="skills" class="section">
+        <div class="section-title-wrap">
+            <h2 class="section-title" data-ar="المهارات التقنية" data-en="My Skills">المهارات التقنية</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fa-brands fa-html5"></i>
+                <span>HTML5</span>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-css3-alt"></i>
+                <span>CSS3</span>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-js"></i>
+                <span>JavaScript</span>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-code"></i>
+                <span>jQuery</span>
+            </div>
+            <div class="skill-card">
+                <i class="fa-brands fa-bootstrap"></i>
+                <span>Bootstrap</span>
+            </div>
+            <div class="skill-card">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <span data-ar="تصميم متجاوب" data-en="Responsive Design">تصميم متجاوب</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="section">
+        <div class="section-title-wrap">
+            <h2 class="section-title" data-ar="معرض المشاريع" data-en="My Portfolio">معرض المشاريع</h2>
+        </div>
+
+        <div class="projects-grid">
+            <!-- 1. عيادة الأسنان -->
+            <div class="project-card">
+                <div class="project-img-wrapper">
+                    <img src="cccc.jpeg" alt="عيادة الأسنان" class="project-img">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title" data-ar="موقع عيادة الأسنان" data-en="Dental Clinic Web App">موقع عيادة الأسنان</h3>
+                    <p class="project-desc" data-ar="واجهة تفاعلية حديثة لحجز المواعيد واستعراض الخدمات الطبية لعيادة أسنان باستخدام HTML, CSS, JS, Bootstrap." data-en="Modern interactive web interface for appointment booking and medical services showcase.">واجهة تفاعلية حديثة لحجز المواعيد واستعراض الخدمات الطبية لعيادة أسنان باستخدام HTML, CSS, JS, Bootstrap.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Bootstrap</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://d7047906-alt.github.io/dental-clinid/" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span data-ar="معاينة مباشرة" data-en="Live Demo">معاينة مباشرة</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Nutrift -->
+            <div class="project-card">
+                <div class="project-img-wrapper">
+                    <img src="sssss.jpeg" alt="Nutrift" class="project-img">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title" data-ar="منصة Nutrift للطعام والتغذية" data-en="Nutrift Platform">منصة Nutrift للطعام والتغذية</h3>
+                    <p class="project-desc" data-ar="تطبيق واجهة مستخدم متكامل لعرض الوجبات الصحية وتنسيق الأنظمة الغذائية المتوازنة بتصميم تجاوبي كامل." data-en="Comprehensive user interface for healthy meals and diet plan coordination.">تطبيق واجهة مستخدم متكامل لعرض الوجبات الصحية وتنسيق الأنظمة الغذائية المتوازنة بتصميم تجاوبي كامل.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">jQuery</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://d7047906-alt.github.io/nutrift-wedsite/" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span data-ar="معاينة مباشرة" data-en="Live Demo">معاينة مباشرة</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. منتجع Dina -->
+            <div class="project-card">
+                <div class="project-img-wrapper">
+                    <img src="vvv.jpeg" alt="منتجع Dina" class="project-img">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title" data-ar="منتجع Dina العقاري" data-en="Dina Real Estate Resort">منتجع Dina العقاري</h3>
+                    <p class="project-desc" data-ar="موقع استعراض عقاري فاخر متعدد الصفحات يضم سلايدر صور تفاعلي واستمارات تواصل ونماذج وحدات سكنية." data-en="Multi-page luxury real estate showcase featuring interactive sliders and booking forms.">موقع استعراض عقاري فاخر متعدد الصفحات يضم سلايدر صور تفاعلي واستمارات تواصل ونماذج وحدات سكنية.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Swiper.js</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://dina-real-estate.pages.dev/" target="_blank" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span data-ar="معاينة مباشرة" data-en="Live Demo">معاينة مباشرة</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
+        <div class="section-title-wrap">
+            <h2 class="section-title" data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</h2>
+        </div>
+
+        <div class="contact-container">
+            <p class="contact-desc" data-ar="هل لديك مشروع وترغب في تحويله إلى واجهة ويب احترافية؟ يسعدني التواصل معك في أي وقت!" data-en="Have a project in mind? Let's bring your web ideas to life together!">هل لديك مشروع وترغب في تحويله إلى واجهة ويب احترافية؟ يسعدني التواصل معك في أي وقت!</p>
+            
+            <div class="contact-cards">
+                <a href="https://wa.me/2001141350793" target="_blank" class="contact-card whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span data-ar="واتساب" data-en="WhatsApp">واتساب</span>
+                    <p data-ar="تواصل مباشر عبر الواتساب" data-en="Direct Message via WhatsApp">تواصل مباشر عبر الواتساب</p>
+                </a>
+                <a href="mailto:d7047906@gmail.com" class="contact-card email">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span data-ar="البريد الإلكتروني" data-en="Email Address">البريد الإلكتروني</span>
+                    <p>d7047906@gmail.com</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p data-ar="&copy; 2026  جميع الحقوق محفوظة - بورتفوليو دينا عاطف | Front-End Developer" data-en="&copy; 2026 All Rights Reserved - Dina Portfolio | Front-End Developer">&copy; 2026 جميع الحقوق محفوظة - بورتفوليو دينا عاطف | Front-End Developer</p>
+    </footer>
+
+    <!-- JQUERY SCRIPT -->
+    <script>
+        $(document).ready(function() {
+            $('#loader-screen').fadeOut(600, function() {
+                $('body').css('overflow-y', 'auto');
+            });
+
+            $('a[href^="#"]').on('click', function(e) {
+                var targetAttr = $(this).attr('href');
+                if(targetAttr && targetAttr.length > 1) {
+                    var target = $(targetAttr);
+                    if(target.length) {
+                        e.preventDefault();
+                        $('html, body').stop().animate({
+                            scrollTop: target.offset().top - 80
+                        }, 600);
+                    }
+                } else if (targetAttr === '#') {
+                    e.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: 0
+                    }, 600);
+                }
+            });
+
+            $(window).on('scroll', function() {
+                var scrollPos = $(window).scrollTop() + 100;
+                $('section').each(function() {
+                    var currLink = $(this);
+                    var refElement = $('#' + currLink.attr('id'));
+                    if (refElement.length && refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+                        $('.nav-links a').removeClass('active');
+                        $('.nav-links a[href="#' + currLink.attr('id') + '"]').addClass('active');
+                    }
+                });
+            });
+
+            let currentLang = 'ar';
+            $('#langToggleBtn').on('click', function() {
+                if (currentLang === 'ar') {
+                    currentLang = 'en';
+                    $('html').attr('lang', 'en').attr('dir', 'ltr');
+                    $('#langText').text('عربي');
+                } else {
+                    currentLang = 'ar';
+                    $('html').attr('lang', 'ar').attr('dir', 'rtl');
+                    $('#langText').text('English');
+                }
+
+                $('[data-ar]').each(function() {
+                    const el = $(this);
+                    const newText = el.attr('data-' + currentLang);
+                    if (newText) {
+                        el.html(newText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
